@@ -47,3 +47,49 @@ exports.findOne = (req, res) => {
             res.status(500).send({ message: `Error retrieving tutorial with ID = ${id}` })
         })
 }
+
+exports.update = (req, res) => {
+    const id = req.params.id
+
+    Tutorial.update(req.body, {
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({ message: 'Tutorial updated.' })
+            } else {
+                res.send({ message: 'Cannot update tutorial.\nTutorial was not found or req.body is empty.' })
+            }
+        }).catch(err => {
+            res.status(500).send({ message: `Error updating tutorial with ID = ${id}` })
+        })
+}
+
+exports.delete = (req, res) => {
+    const id = req.params.id
+
+    Tutorial.destroy({
+        where: {
+            id: id
+        }
+    }).then(num => {
+        if (num == 1) {
+            res.send({ message: 'Tutorial deleted.' })
+        } else {
+            res.send({ message: 'Cannot delete tutorial.\nTutorial was not found.' })
+        }
+    }).catch(err => {
+        res.status(500).send({ message: `Error deleting tutorial with id ${id}` })
+    })
+}
+
+exports.deleteAll = (req, res) => {
+    Tutorial.destroy({
+        where: {},
+        truncate: false
+    }).then(nums => {
+        res.send({ message: `${nums} Tutorials were deleted.` })
+    }).catch(err => {
+        res.status(500).send({ message: err.message || 'Error deleting tutorials.' })
+    })
+}
