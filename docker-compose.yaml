@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  db:
+    container_name: db_tutorials
+    image: postgres
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=$DATABASE_NAME
+      - POSTGRES_USER=$DATABASE_USERNAME
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+    ports:
+      - $DATABASE_PORT:$DATABASE_PORT
+    
