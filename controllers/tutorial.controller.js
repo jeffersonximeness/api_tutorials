@@ -29,6 +29,21 @@ exports.findAll = (req, res) => {
         .then(data => {
             res.send(data)
         }).catch(err => {
-            res.send({ message: err.message || 'Some error occurred retrieving tutorials' })
+            res.status(500).send({ message: err.message || 'Some error occurred retrieving tutorials' })
+        })
+}
+
+exports.findOne = (req, res) => {
+    const id = req.params.id
+
+    Tutorial.findByPk(id)
+        .then(data => {
+            if (data) {
+                res.send(data)
+            } else {
+                res.status(404).send({ message: `Cannot find tutorial. ID = ${id}` })
+            }
+        }).catch(err => {
+            res.status(500).send({ message: `Error retrieving tutorial with ID = ${id}` })
         })
 }
