@@ -1,5 +1,6 @@
 const db = require('../models')
-const Tutorial = require('../models/tutorial.model')
+const Op = require('sequelize').Op
+const Tutorial = db.tutorials
 
 exports.create = (req, res) => {
     if (!req.body.title) {
