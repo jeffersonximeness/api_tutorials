@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const db = require('./models')
+const tutorialsRoutes = require('./routes/tutorial.routes')
 require('dotenv').config()
 
 
@@ -24,6 +25,8 @@ db.sequelize.sync({ force: true }).then(() => {
 app.get('/', (req, res) => {
     res.send({ message: 'Hello world.' })
 })
+
+app.use('/api/tutorials', tutorialsRoutes)
 
 const PORT = process.env.PORT || 8080
 
