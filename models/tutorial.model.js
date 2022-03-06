@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         published: {
-            type: Sequelize.STRING
+            type: Sequelize.BOOLEAN
         }
     })
 
