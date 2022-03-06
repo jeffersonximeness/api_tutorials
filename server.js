@@ -1,6 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const db = require('./models')
+require('dotenv').config()
+
 
 const app = express()
 
@@ -13,6 +16,10 @@ app.use(cors(corsOptions))
 // parse requests do tipo content-type - application/json
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+db.sequelize.sync({ force: true }).then(() => {
+    console.log('Dropping and re-sync tables.')
+})
 
 app.get('/', (req, res) => {
     res.send({ message: 'Hello world.' })
